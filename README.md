@@ -1,5 +1,5 @@
-# JohnnyFive
-<img src="https://i.kinja-img.com/gawker-media/image/upload/s--SpV3SQNU--/c_scale,f_auto,fl_progressive,q_80,w_800/zzivoqdkdck0fzncmhhr.jpg" alt="Johnny_Five" width="400px" height="210px">
+# The Civil War of Malibu
+<img src="https://upload.wikimedia.org/wikipedia/en/e/e5/Malibu_%28Official_Single_Cover%29_by_Miley_Cyrus.png" alt="Johnny_Five" width="400px" height="210px">
 
 # Description
 
@@ -45,12 +45,7 @@ Lewis: [LinkedIn](https://www.linkedin.com/in/lewis-lovette-983316151/)  | [Main
 ## People
 > Add your own pictures.
 
-- Aaron Machin
-- Lewis Lovette
-- Filip Niezgoda
-- George Peters
-- Andrei *
-- Bolu *
+
 
 ***
 
