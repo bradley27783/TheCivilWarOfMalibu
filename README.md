@@ -2,7 +2,7 @@
 <img src="https://upload.wikimedia.org/wikipedia/en/e/e5/Malibu_%28Official_Single_Cover%29_by_Miley_Cyrus.png" alt="Johnny_Five" width="500px" height="300px">
 
 # Description
-In a world of cryptocurrency, HoloCoin prevails as the main currency of Malibu, a now independant state. After ~~several hundred~~ a few years of Malibu being indpendant, the country has become corrupt and has been dragged into a state of civil war. Rich people are weird, huh?
+In a world of cryptocurrency, HoloCoin prevails as the main currency of Malibu, a now independant state. After ~~several hundred~~ a few years of Malibu being independant, the country has become corrupt and has been dragged into a state of civil war. Rich people are weird, huh?
 
 ***
 
