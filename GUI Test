@@ -4,10 +4,19 @@ using namespace std;
 int main()
 {
     
-    cout << "---------------------------------" << endl;
-    cout << "---- THE CIVIL WAR OF MALIBU ----" << endl;
-    cout << "-- Created by: CivilWarStudios --" << endl;
-    cout << "--- Published by: Some Dudes ----" << endl;
-    cout << "---------------------------------" << endl;
+    //Opening Screen
+    cout << "-----------------------------------------------" << endl;
+    cout << "--------- THE CIVIL WAR OF MALIBU -------------" << endl;
+    cout << "------- Created by: CivilWarStudios -----------" << endl;
+    cout << "------------ Published by: IDK ----------------" << endl;
+    cout << "-----------------------------------------------" << endl;
+    cout << "------- In a world of cryptocurrency, ---------" << endl;
+    cout << "-- HoloCoin prevails as the main currency of --" << endl;
+    cout << "------ Malibu, a now independent state. -------" << endl;
+    cout << "--------- After a few years of Malibu ---------" << endl;
+    cout << "-- being independent, the country has become --" << endl;
+    cout << "-- corrupt and has been dragged into a state --" << endl;
+    cout << "-- of civil war. Rich people are weird, huh? --" << endl;
+    cout << "-----------------------------------------------" << endl;
 
 }
