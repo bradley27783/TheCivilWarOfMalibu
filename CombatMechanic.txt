@@ -1,4 +1,25 @@
 Both armies have attack and defense values, the amount of troops lost will be a percentage of the defense value according to the attack value
 
+Example
+Army 1 
+Attack Value - 1110 (after 10% roll from 1150)
+Defense Value - 636 (after 10% roll from 625)
+Army 2 
+Attack Value - 1070 (after 10% roll from 1150)
+Defense Value - 603 (after 10% roll from 625)
+
+as both would lose around 50% of their troops a win condition of the battle has to be defined therefore:
+Winner gets 50% of the normal deaths
+Loosser gets 100% of the normal deaths
+
+Condition to get 0 troops in a territory
+As this system would never work out a 0 troop value Attack value for an Army must be (4)*Army2
 
 Example
+Army 1 
+Attack value after a few attacks - 600
+Army 2
+Attack value after a few defenses - 100
+as Army 1 has (4)*attack of army 2, army 2 loses all troops and territory goes to army 1
+
+(4) value can be changed
