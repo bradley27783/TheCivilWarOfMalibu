@@ -1,1 +1,13 @@
+#include<iostream>
+using namespace std;
 
+int main()
+{
+    
+    cout << "---------------------------------" << endl;
+    cout << "---- THE CIVIL WAR OF MALIBU ----" << endl;
+    cout << "-- Created by: CivilWarStudios --" << endl;
+    cout << "--- Published by: Some Dudes ----" << endl;
+    cout << "---------------------------------" << endl;
+
+}
