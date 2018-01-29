@@ -1,4 +1,5 @@
-Both armies have attack and defense values, the amount of troops lost will be a percentage of the defense value according to the attack value
+Both armies have attack and defense values, the amount of troops lost will be a 
+percentage of the defense value according to the attack value
 
 Example
 Army 1 
