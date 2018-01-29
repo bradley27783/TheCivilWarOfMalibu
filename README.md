@@ -1,5 +1,5 @@
-# The Civil War of Malibu
-<img src="https://upload.wikimedia.org/wikipedia/en/e/e5/Malibu_%28Official_Single_Cover%29_by_Miley_Cyrus.png" alt="Johnny_Five" width="400px" height="210px">
+# The Civil War of Malibu 
+<img src="https://upload.wikimedia.org/wikipedia/en/e/e5/Malibu_%28Official_Single_Cover%29_by_Miley_Cyrus.png" alt="Johnny_Five" width="500px" height="300px">
 
 # Description
 
@@ -20,9 +20,8 @@
 
 ## Links and things
 ### Sheets
-N/A right now
-
-#### Below this is nothing really important
+Notes sheet: https://goo.gl/QCqy6g
+Sprint: https://goo.gl/HdE3JN
 
 ***
 
@@ -32,3 +31,5 @@ Aaron: [LinkedIn](https://www.linkedin.com/in/aaron-m-15689b94/) | [SuperSecret]
 
 # Discord:
 https://discord.gg/hKUtu3K
+
+<img src="https://reservebar.global.ssl.fastly.net/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/m/a/malori.jpg" alt="Johnny_Five" width="200px" height="250px">
