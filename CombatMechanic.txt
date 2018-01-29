@@ -22,4 +22,4 @@ Army 2
 Attack value after a few defenses - 100
 as Army 1 has (4)*attack of army 2, army 2 loses all troops and territory goes to army 1
 
-(4) value can be changed
+all values can be changed if its not balancing properly at this stage
