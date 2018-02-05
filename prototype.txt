@@ -1,0 +1,22 @@
+By the 12th of Febuary we should have a working prototype. We will need to talk on Discord to complete this.
+
+///////////////////////////////NOTES////////////////////////////////////
+For the prototype, we will only include one unit; HoloSoldier
+There should be databases in the real code, but in this, you can use classes and other implimentations, just to get it to work.
+This can be in Python, but try to do it in C++.
+
+//////INTERFACE
+(3 seperate types of interface: opening, standard and territory view)
+This should have the following:
+-turn number
+-the map
+-territories (1-9) (using the simple map)
+-The option to view a territory
+
+--In viewing the territory, the user should have the option to do the following:
+-Move
+-Attack
+-Buy units
+-Buy production
+-Disband units
+
