@@ -27,12 +27,10 @@ all values can be changed if its not balancing properly at this stage
 
 non-complete Python example
 class army():
-    def __init__(self):
-        totalAtk = 0
-        totalDef = 0
-        self.totalAtk = totalAtk
-        self.totalDef = totalDef
-        upkeep = 0.1 * self.totalAtk
+    totalAtk = 0
+    totalDef = 0
+    def __init__(self):     
+        upkeep = 0.1 * army.totalAtk
 
 class soldier(army):
     def __init__(self, amount):
@@ -45,24 +43,6 @@ class tank(army):
         army.totalDef += 25 * amount
         
 class horse(army):
-    def __init__(self,amount):
+    def __init__(self, amount):
         army.totalAtk += 10 * amount
         army.totalDef += 5 * amount
-
-a1 = army()
-       
-def menu(character):
-    if character == "s":
-        amount=int(input("how many?"))
-        a1.soldier(amount)
-    elif character == "t":
-        amount=int(input("how many?"))
-        a1.tank(amount)
-    elif character == "h":
-        amount=int(input("how many?"))
-        a1.horse(amount)
-    else:
-        print("Character not in list")
-    print(a1.totalAtk())
-        
-menu(input("s, t or h : "))
