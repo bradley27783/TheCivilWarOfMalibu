@@ -1,7 +1,3 @@
-// ITS JUST A TEXT FILE NOT A CODE!!!!!!1!!!!!!!!!!!!!11!111!!!!!!
-
-
-
 #include<iostream>
 using namespace std;
 
