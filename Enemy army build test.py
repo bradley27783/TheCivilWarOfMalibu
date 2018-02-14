@@ -15,7 +15,7 @@ def enemyArmyBuild(plyrAtkVal):
     #using two variables so there is some diversity in
     #enemy armies made.
     #If group thinks it's a good idea, 
-    minPe+rc = 1.25 * plyrAtkVal
+    minPerc = 1.25 * plyrAtkVal
     maxPerc = 1.35 * plyrAtkVal
 
     indWeights = [] #array to hold weighted values, so weaker troops are chosen more often than stronger ones
