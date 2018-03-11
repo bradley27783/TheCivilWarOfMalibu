@@ -1,6 +1,16 @@
 #include <iostream>
 #include <sstream>
+#include <string>
 using namespace std;
+
+/* UNUSED */
+
+/*Variables */
+char knownWords [5][10] = {"look","inspect","use","break","help"};/*Words the user can use to interact*/
+char knownObjects [1][10] = {"screen"};
+
+int done = 0;
+
 
 /* Declarations */
 void checker();
@@ -11,36 +21,29 @@ void showScreen();
 void breakScreen();
 int main();
 
-/*Variables */
-char knownWords [5][10] = {"look","inspect","use","break","help"};/*Words the user can use to interact*/
-char knownObjects [1][10] = {"screen"};
 
 void checker(string input)
 {
-	
+	done++;
 
-	string inputArr[4];
 	int i =0;
 
-	/* Splits the input into array */
-	stringstream ssin(input);
-	while(ssin.good() && i < 4)
+	/* Splits the input into array -- Needs to be done to fix*/ 
+	istringstream iss(input);
+	vector<std::string> inputArr(std::istream_iterator<std::string>{iss},
+                                 istream_iterator<std::string>());
+
+
+	for(int j=0;j<2;j++)
 	{
-		ssin >> inputArr[i];
-		++i;
-	}
-	for(int j=0;j<sizeof(inputArr);j++)
-	{
-		for(int i=0;i<sizeof(knownWords);i++)
+		for(int i=0;i<5;i++)
 		{
 			if(inputArr[j] == knownWords[i])
 			{
-				cout << "showing4 ";
 				cout << inputArr[j+1] << endl;
 				/*Look & inspect*/
 				if((i==0 || i==1) && (inputArr[j+1] == knownObjects[0]))
 				{
-					cout << "showing5 ";
 					showScreen();
 				}
 				/*use*/
@@ -61,7 +64,6 @@ void checker(string input)
 			}
 		}
 	}
-	cout << "You can't do that!" << endl;
 	main();
 }
 
@@ -95,11 +97,13 @@ void showScreen()
 		if(input == "1")
 		{
 			/*Intergration here*/
+			help();
 		}
 
 		else if(input == "2")
 		{
 			/*Server intergration here*/
+			help();
 		}
 
 		else if(input == "3")
@@ -116,21 +120,32 @@ void showScreen()
 
 int main()
 {
-		cout << "'Welcome to the Civil War of Malibu, Commander', a voice reported," << endl;
-		cout << "Have you signed into the local interface?" << endl;
-		cout << "In front of you is a SCREEN." << endl;
-		cout << "... -- type 'Help' for help." << endl;
-
-		while(true)
+	string input;
+	while(true)
+	{
+		if(done == 0)
 		{
-			string input;
+			cout << "'Welcome to the Civil War of Malibu, Commander', a voice reported," << endl;
+			cout << "Have you signed into the local interface?" << endl;
+			cout << "In front of you is a SCREEN." << endl;
+			cout << "... -- type 'Help' for help." << endl;
+			
 			cout << "ENTER_> ";
 			cin >> input;
 
-			/*tolower(input);*/
-
+		/*tolower(input);*/
+		}
+		else
+		{
+			cout << "ENTER_> ";
+			cin >> input;
+		}
+		
+		if(input != ""){
 			checker(input);
 		}
+	}
+		
 
 }
 
@@ -145,4 +160,3 @@ void breakScreen()
 	cout << "Good." << endl;
 	main();
 }
-
