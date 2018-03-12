@@ -3,16 +3,6 @@
 #include "libsqlite.hpp"
 using namespace std;
 
-void amountUnits(int player_ID, int troop_ID)
-    int amount
-    cout << "How many troops do you want?"
-    cin >> amount
-    int map_ID
-    cout << "Where do you want the units placed?";
-    cin >> map_ID
-    for(int i=0 : amount+1 : i++)
-        purchaseUnitType(player_ID, troop_ID, map_ID)
-        
 void purchaseUnitType(int player_ID, int troop_ID, int map_ID)
     {
     string file = "civilwarofMalibu.db";
@@ -31,7 +21,7 @@ void purchaseUnitType(int player_ID, int troop_ID, int map_ID)
         cur1->bind(2, troop_ID);
         cur1->bind(3, map_ID);
         
-        cur2->set_sql("SELECT cost 
+        cur2->set_sql("SELECT cost "
                       "FROM military_Units"
                       "WHERE ID = ?");
         cur2->prepare();
@@ -41,17 +31,17 @@ void purchaseUnitType(int player_ID, int troop_ID, int map_ID)
         int cost = cur2->get_int(0);
         
         cur3->set_sql("SELECT total_Money"
-                      "FROM player")
+                      "FROM player");
         cur3->prepare();
         cur3->step();
         
         int total_Money = cur3->get_int(0);
-        total_Money = total_Money - cost
+        total_Money = total_Money - cost;
         
         cur4->set_sql("UPDATE player"
-                      "SET total_Money = ?")
+                      "SET total_Money = ?");
         cur4->prepare();
-        cur4->bind(1, total_Money)
+        cur4->bind(1, total_Money);
             
         
     }
@@ -59,4 +49,25 @@ void purchaseUnitType(int player_ID, int troop_ID, int map_ID)
     {
         std::cerr << e.what() << endl;
     }
+}
+
+void amountUnits(int player_ID, int troop_ID)
+{
+    int amount;
+    cout << "How many troops do you want?";
+    cin >> amount;
+    int map_ID;
+    cout << "Where do you want the units placed?";
+    cin >> map_ID;
+    int i = 1;
+    for(i ; amount!=i ; i++)
+        purchaseUnitType(player_ID, troop_ID, map_ID);
+}
+
+int main
+{
+   int player_ID=1;
+   int troop_ID=3;
+   amountUnits(player_ID, troop_ID);
+   return 0;
 }
