@@ -118,7 +118,7 @@ tuple terrToAttack(map) //Finds an appropriate place to attack or defend
 int mapDB() // Gets the map information
 {
 	
-	int aiMap [9] = [1,2,3]; //list of ai territories
+	int aiMap [9] = {1,2,3}; //list of ai territories
 	return(aiMap);
 }
 
