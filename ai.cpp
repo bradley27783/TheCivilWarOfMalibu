@@ -9,6 +9,7 @@ using namespace std;
 
 
 int aiPers = 90; //100 full agression, 0 full defence
+int aiDefence = 70; //100 full military units, 0 full production units
 
 
 
@@ -17,7 +18,7 @@ int main()
 
 }
 
-void balancedAI()
+void AI()
 {
 	int map = mapDB();//Gets an array of AI owned territories, for checking
 
@@ -97,8 +98,6 @@ int terrToAttack(map) //Finds an appropriate place to attack or defend
 		terr++;
 	}
 }
-
-int 
 
 int mapDB() // Gets the map information
 {
