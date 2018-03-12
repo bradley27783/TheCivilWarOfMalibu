@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <stdlib.h> 
+#include <tuple>
 #include "libsqlite.hpp"
 
 using namespace std;
@@ -83,17 +84,32 @@ bool worthAttack(playerDefence,attackValue)
 	}
 }
 
-int terrToAttack(map) //Finds an appropriate place to attack or defend
+tuple terrToAttack(map) //Finds an appropriate place to attack or defend
 {
 	int terr = 1;
+	int maxTerritories = 9;
 	while(true){
 		if(any_of(begin(map[0]), end(map[0]), [&](int i) {return i == terr+1;} == False); //Solution from https://stackoverflow.com/questions/19299508/how-can-i-check-if-given-int-exists-in-array
 		{//Not an AI territory
-			return(terr,terr+1);
+			if(terr+1 > maxTerritories)
+			{
+			
+			}
+			else
+			{
+				return make_tuple(terr,terr+1);
+			}
 		}
 		else if (any_of(begin(map[0]), end(map[0]), [&](int i) {return i == terr-1;} == False);
 		{//Not an AI territory
-			return(terr,terr-1);
+			if(terr-1 <= 0)
+			{
+				
+			}
+			else
+			{
+				return make_tuple(terr,terr-1);
+			}
 		}
 		terr++;
 	}
@@ -101,7 +117,9 @@ int terrToAttack(map) //Finds an appropriate place to attack or defend
 
 int mapDB() // Gets the map information
 {
-	return(aiMap);//list of ai territories
+	
+	int aiMap [9] = [1,2,3]; //list of ai territories
+	return(aiMap);
 }
 
 int playerArmyDB() //Gets the player stats for specific territories
