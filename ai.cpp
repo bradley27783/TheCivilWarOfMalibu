@@ -8,7 +8,7 @@
 using namespace std;
 
 
-int mult = 1; //if it = 1 = most
+int aiPers = 90; //100 full agression, 0 full defence
 
 
 
@@ -35,7 +35,7 @@ void balancedAI()
 
 	if(worthAttack(playerDefence,attackValue))//Is attack worth it?
 	{
-		if((rand()%100)>20)//Defence
+		if((rand()%100)>aiPers)//Defence
 			{
 				//Can do both Production and army
 				if((rand()%100)>10)//Production
