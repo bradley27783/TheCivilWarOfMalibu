@@ -5,38 +5,6 @@
 #include <vector>
 using namespace std;
 
-int delTroops(threshold, map_ID, player_ID)
-{
-    string file = "civilwarofMalibu.db";
-    try
-    {
-        sqlite::sqlite db(file);
-        auto cur1=db.get_statement();
-        
-        vector<int> armyValues troopCounter(map_ID, player_ID);
-        int attackValue = armyValues[0];
-        
-        
-        while( attackValue > threshold )
-        {
-            vector<int> armyValues troopCounter(map_ID, player_ID);
-            int attackValue = armyValues[0];
-            
-            cur1->set_sql("DELETE TOP FROM player_Army "
-                          "WHERE map_ID = ? AND player_ID = ? ")
-            cur1->prepare();
-            cur1->bind(1, map_ID);
-            cur1->bind(2, player_ID);
-            cur1->step();
-        }
-        
-    }
-    catch(sqlite::exception e)
-    {
-        std::cerr << e.what() << endl;
-    }
-}
-
 vector<int> troopCounter(map_ID, player_ID)
 {
     string file = "civilwarofMalibu.db";
@@ -78,6 +46,40 @@ vector<int> troopCounter(map_ID, player_ID)
         std::cerr << e.what() << endl;
     }
 }
+
+
+int delTroops(threshold, map_ID, player_ID)
+{
+    string file = "civilwarofMalibu.db";
+    try
+    {
+        sqlite::sqlite db(file);
+        auto cur1=db.get_statement();
+        
+        vector<int> armyValues troopCounter(map_ID, player_ID);
+        int attackValue = armyValues[0];
+        
+        
+        while( attackValue > threshold )
+        {
+            vector<int> armyValues troopCounter(map_ID, player_ID);
+            int attackValue = armyValues[0];
+            
+            cur1->set_sql("DELETE TOP FROM player_Army "
+                          "WHERE map_ID = ? AND player_ID = ? ")
+            cur1->prepare();
+            cur1->bind(1, map_ID);
+            cur1->bind(2, player_ID);
+            cur1->step();
+        }
+        
+    }
+    catch(sqlite::exception e)
+    {
+        std::cerr << e.what() << endl;
+    }
+}
+
 
 int battle(map_ID, player_ID, AI_map_ID)
 {
