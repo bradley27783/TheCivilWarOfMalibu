@@ -42,8 +42,8 @@ vector<int> troopCounter(int map_ID, int player_ID, string AIorPlayer) ///Counts
         {
             cur1->set_sql("SELECT military_Units.Attack , military_Units.Defence "
                           "FROM military_Units "
-                          "INNER JOIN AI_Army ON military_Units.ID = AI_Army.military_ID "
-                          "WHERE AI_Army.player_ID = ? ");        
+                          "INNER JOIN ai_Army ON military_Units.ID = ai_Army.military_ID "
+                          "WHERE ai_Army.player_ID = ? ");        
             cur1->prepare();
             cur1->bind(1, player_ID);
             cout << "TroopTest2" << endl;
@@ -67,7 +67,7 @@ vector<int> troopCounter(int map_ID, int player_ID, string AIorPlayer) ///Counts
 }
 
 
-int delTroops(int threshold, int map_ID, int player_ID, string AIorPlayer) ///Deletes the top value in the army database tables until it is under the army threshold
+int delTroops(int threshold, int map_ID, int player_ID, int AI_map_ID, string AIorPlayer) ///Deletes the top value in the army database tables until it is under the army threshold
 {
     const string file = "civilwarofMalibu.db";
     
@@ -80,7 +80,7 @@ int delTroops(int threshold, int map_ID, int player_ID, string AIorPlayer) ///De
         
         if( AIorPlayer == "AI")
         {
-            vector<int> armyValues = troopCounter(map_ID, player_ID, "Player");
+            vector<int> armyValues = troopCounter(map_ID, player_ID,  "Player");
             int attackValue = armyValues[0];
             cout << attackValue << " !!!!!!! " << threshold << endl;
             while(attackValue>threshold)
@@ -102,22 +102,22 @@ int delTroops(int threshold, int map_ID, int player_ID, string AIorPlayer) ///De
 
         else if ( AIorPlayer == "Player")
         {
-            vector<int> armyValues = troopCounter(map_ID, player_ID, "AI");
+            vector<int> armyValues = troopCounter(AI_map_ID, player_ID, "AI");
             int attackValue = armyValues[0];
             cout << attackValue << " !!!!!!! " << threshold << endl;
             while(attackValue>threshold)
             {
-                cur1->set_sql("DELETE FROM AI_Army "
+                cur1->set_sql("DELETE FROM ai_Army "
                               "WHERE map_ID = ? AND player_ID = ? "
                               "ORDER BY uniqueunit_id ASC "
                               "LIMIT 1; ");
                  cur1->prepare();
-                 cur1->bind(1, map_ID);
+                 cur1->bind(1, AI_map_ID);
                  cur1->bind(2, player_ID);
                  cur1->step();
                  cur1->reset();
-                 cout << "DoneBattleAI " << "Threshold: " << threshold << endl;
-                 vector<int> armyValues = troopCounter(map_ID, player_ID, "AI");
+                 cout << "DoneBattlePlayer " << "Threshold: " << threshold << endl;
+                 vector<int> armyValues = troopCounter(AI_map_ID, player_ID, "AI");
                  attackValue = armyValues[0];
             }
         }
@@ -163,7 +163,7 @@ int battle(int map_ID, int player_ID, int AI_map_ID) ///Calculates the threshold
             cout << "AI won the battle!" << endl;
             int threshold = static_cast<double>(AIAttack) - (static_cast<double>(AIAttack)*(static_cast<double>(AIDefence)/static_cast<double>(playerAttack)));
             cout << "Threshold : " << threshold << endl << flush;
-            delTroops(threshold, map_ID, player_ID, "AI");
+            delTroops(threshold, map_ID, player_ID, AI_map_ID, "AI");
         }
     }
     else if (playerAttack>AIAttack)
@@ -179,7 +179,7 @@ int battle(int map_ID, int player_ID, int AI_map_ID) ///Calculates the threshold
             cout << "You won the battle!" << endl;
             int threshold = static_cast<double>(playerAttack) - (static_cast<double>(playerAttack)*(static_cast<double>(playerDefence)/static_cast<double>(AIAttack)));
             cout << "Threshold : " << threshold << endl << flush;
-            delTroops(threshold, map_ID, player_ID, "Player");
+            delTroops(threshold, map_ID, player_ID, AI_map_ID, "Player");
         }
     }
     else if (playerAttack==AIAttack)
