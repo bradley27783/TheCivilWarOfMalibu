@@ -25,7 +25,7 @@ void enemyArmyBuild(int playerID, int territoryID)
 	 * 110% of the player army's attack value in the "highest" territory number they
 	 * own. The AI's army is then stored in the database, so it can be used later.
 	 */
-    
+
 	SoldierInfo currentInfo; //creates object from struct, to interact with
 
 	sqlite::sqlite db("civilwarofMalibu.db"); //connect to database
@@ -34,10 +34,12 @@ void enemyArmyBuild(int playerID, int territoryID)
     int playerAttackVal = 0;
     
     cur->set_sql(
-		"SELECT map_ID "
-		"FROM Map "
-        "WHERE player_ID = ? AND Owned = 1 " //beore and specifies player, after and specifies army at territory owned by player
-        "ORDER BY map_ID DESC " //Highest number first (which is what I want)
+		"SELECT Map.map_ID "
+		"FROM Map INNER JOIN player_Army " //inner join because want to access some values from table where values same
+        "ON player_Army.map_ID = Map.map_ID " //both map IDs are same
+        "WHERE Map.player_ID = ? AND Map.Owned = 1 " //before "and" specifies player, after "and" specifies army at territory owned by player
+        "AND player_Army.uniqueunit_ID >= 1 " //makes sure there is at least one troop linked to relevant territory
+        "ORDER BY Map.map_ID DESC " //Highest number first (which is what I want because I'm choosing the army closest to the enemy)
         "LIMIT 1; "); //using "LIMIT" because implementation of "TOP" varies more depending on SQL dialect (Oracle, Microsoft and MySQL all have different ways of specifying "TOP").
     
     cur->prepare();
@@ -46,7 +48,7 @@ void enemyArmyBuild(int playerID, int territoryID)
     
     int topTerritory = cur->get_int(0); //gets top territory 
     playerAttackVal = stoi(armyCalc(playerID, topTerritory, "player")); //calls function to get player's army attack value. (Converts string to integer, because that's what's needed.)
-    
+
     if (playerAttackVal < 10)
     {
         playerAttackVal = 10; /* quick code to protect against cases where top territory might not have any troops,
@@ -163,7 +165,7 @@ void enemyArmyBuild(int playerID, int territoryID)
 			}
 		}
 	}
-
+    cur->reset(); //reset cursor
 	//testing code below
 	/*
     int soldier = 0;
@@ -211,4 +213,27 @@ void enemyArmyBuild(int playerID, int territoryID)
         cout << test << endl;
     }
     cout << currentInfo.totalWeights << endl;*/
+}
+
+void aiArmyScale(int playerID)
+{
+    /* This function calls the army builder for each territory owned by the enemy,
+     * which means all enemies at every territory are scaled. */
+    
+    sqlite::sqlite db("civilwarofMalibu.db");
+	auto cur = db.get_statement();
+    cur->set_sql("SELECT map_ID FROM Map "
+                 "WHERE Owned = 0 AND player_ID = ?; "); //selects all enemy territories relevant to player
+    cur->prepare();
+    cur->bind(1, playerID);
+    vector<int> enemyTerritories;
+    while (cur->step()) //puts all enemy territory IDS into vector
+    {
+        enemyTerritories.push_back(cur->get_int(0));
+    }
+    cur->reset(); //resets cursor because will be used in enemyAttackBuild function next
+    for (int currentTerritory : enemyTerritories) //runs army builder for all relevant territories
+    {
+        enemyArmyBuild(playerID, currentTerritory);
+    }
 }
