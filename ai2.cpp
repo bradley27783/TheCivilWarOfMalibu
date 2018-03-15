@@ -10,7 +10,7 @@ using namespace std;
 
 
 const char* database = "civilwarofMalibu.db";
-const char* player_ID = "0";
+const char* player_ID = "1";
 
 
 int addArmy(int terr)//Adds units to the ai to territory
@@ -52,16 +52,16 @@ int addArmy(int terr)//Adds units to the ai to territory
 
 int findAmountAi()//Find amount of AI territories
 {
-	int aiNum=0;
+	int aiNum=0;//Number identifier for AI
 	try
 	{
 		sqlite::sqlite db( database );//Opens database
 
 		auto cur1 = db.get_statement();
-		cur1->set_sql("SELECT Owned FROM Map;");//Selecting owned column of map
+		cur1->set_sql("SELECT Owned FROM Map WHERE player_ID = ?;");//Selecting owned column of map
 		cur1->prepare();
 
-
+		cur1->bind(1,player_ID);
 		int aiAmount=0;
 
 		int i;
