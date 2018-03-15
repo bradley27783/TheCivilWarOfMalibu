@@ -187,12 +187,6 @@ int* selectTerr(int* Aimap, int aSize, int* returnValue)//Find appropriate terri
 //
 //Adam's code
 //
-#include <iostream>
-#include <string>
-#include <stdlib.h> 
-#include "libsqlite.hpp"
-#include <vector>
-using namespace std;
 
 vector<int> troopCounter(int map_ID, int player_ID, string AIorPlayer) ///Counts the attack and defence of the total amount of units 
 {
