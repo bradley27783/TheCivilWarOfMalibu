@@ -149,6 +149,7 @@ int battle(int map_ID, int player_ID, int AI_map_ID) ///Calculates the threshold
                 cout << "AI wiped out your army!" << endl;
                 cur1->set_sql("DELETE FROM player_Army "
                               "WHERE map_ID = ? AND player_ID = ? ");
+                cur1->prepare();
                 cur1->bind(1, map_ID);
                 cur1->bind(2, player_ID);
                 cur1->step();
