@@ -1,9 +1,14 @@
 #include <iostream>
+#pragma once 
+/* Note: using #pragma once ensures the file is only included once when compiling main.cpp,
+* because EnemyBuild.cpp and MapUpdate.cpp both use this file and having two definitions of
+* the same file goes against the One Definition Rule
+* (https://en.wikipedia.org/wiki/One_Definition_Rule) in C++, which causes compilation errors.
+* */
 #include "libsqlite.hpp"
 
 using namespace std;
-
-string armyCalc(int playerID, int terrID, string whoseArmy)
+int armyCalc(int playerID, int terrID, string whoseArmy)
 {
     /* This function takes player ID and territory number, and then returns army value stats
      * for that territory as string (because I want to manipulate it as a string later). It 
@@ -13,7 +18,7 @@ string armyCalc(int playerID, int terrID, string whoseArmy)
     if ((whoseArmy != "player") && (whoseArmy != "ai"))
     {
         cout << whoseArmy << endl;
-        return "Did not specify correct string paramater!/n String paramater must be 'player' or 'ai'!\n";
+        return 1;
         /* Breaks function and reprimands programmer using this function for not following rules.
          * Also protects against SQL injection because only two valid values can be specified, 
          * and neither of these values allows an unintended consequence.*/
@@ -41,9 +46,5 @@ string armyCalc(int playerID, int terrID, string whoseArmy)
         //multiplies occurrences of troop with attack value and then adds to army value
     }
     
-    if (armyVal == 1){
-        return "     "; //placeholder information to keep map proper size if no value
-    }
-    
-    return to_string(armyVal);
+    return armyVal;
 }

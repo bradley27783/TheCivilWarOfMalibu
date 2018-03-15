@@ -11,6 +11,8 @@ using namespace std;
 #include "main.h"
 #include "playerInfo.hpp"
 #include "TroopPurchasing.hpp"
+#include "MapUpdate.cpp"
+#include "EnemyBuild.cpp"
 
 int Menu::menu_Header(string menu, int player_ID){   //This function creates a header for the gui
     
@@ -195,7 +197,14 @@ int Menu::main_Menu(int player_ID){ //Main body of the game
         sleep(1);
     }    
     else if(user_Input == 1){ //Shows the map
-        cout << "Map" << endl;
+		cout << "\033[2J\033[1;1H"; //clear terminal before showing map to make neater
+		cout << mapUpdate(player_ID); //calls function and prints map returned by function in stdout
+		cin.clear(); //clear error flag
+		cin.ignore(10000, '\n'); //clears stdin so user can now input something new
+		cout << "Press enter to return to menu." << endl;
+		cin.get(); //asks user to input something, so the map is paused until user presses enter
+		/*note: used "cin >> testInt;" before, but it required an actual input, but this only 
+		requires user to press enter*/
     }
     else if(user_Input == 2){ //Runs attack
         cout << "Attack" << endl;
@@ -236,7 +245,7 @@ void Menu::next_Turn(int player_ID){
 
     totalMoney = totalMoney + income;
     turn = turn + 1;
-    
+    aiArmyScale(player_ID);
     string File = "civilwarofMalibu.db";
 
     try{

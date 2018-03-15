@@ -1,7 +1,8 @@
 #include <iostream> 
 #include <string> //using string library to gain access to functions that can replace parts of string
-#include "ArmyCalc.cpp"
+
 #include "libsqlite.hpp"
+#include "ArmyCalc.cpp"
 
 using namespace std;
 
@@ -77,8 +78,11 @@ string mapUpdate(int playerID)
         }
         map.replace(terrCheck, 3, terrReplacedWith); //performs the actual replacement in the map for owning
         
-        enReplacedWith = armyCalc(playerID, curEnInt, "ai");
-        
+        enReplacedWith = to_string(armyCalc(playerID, curEnInt, "ai"));
+		if (enReplacedWith == "0")
+		{
+			enReplacedWith = "     "; //displays as empty rather than as having no value
+		}
         switch(enReplacedWith.length()) //formatting string to 5 characters so it fits in map
         {
             case 1:
@@ -105,7 +109,7 @@ string mapUpdate(int playerID)
 		curTerrInt++;
         curEnInt--;
     }
-    
+	
     cur->reset();
     
     /* Note: Cannot close database connection because, in libsqlite.hpp, the destructor (~sqlite())
