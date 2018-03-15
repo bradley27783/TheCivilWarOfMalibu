@@ -4,7 +4,7 @@
                   //edit: vector usage only for test purposes (counting how many troops there are)
 
 #include "libsqlite.hpp"
-#include "ArmyCalc.cpp" //using this to find player's army value
+#include "ArmyCalc.cpp"
 
 using namespace std;
 
@@ -47,7 +47,7 @@ void enemyArmyBuild(int playerID, int territoryID)
     cur->step();
     
     int topTerritory = cur->get_int(0); //gets top territory 
-    playerAttackVal = stoi(armyCalc(playerID, topTerritory, "player")); //calls function to get player's army attack value. (Converts string to integer, because that's what's needed.)
+    playerAttackVal = armyCalc(playerID, topTerritory, "player"); //calls function to get player's army attack value.
 
     if (playerAttackVal < 10)
     {
