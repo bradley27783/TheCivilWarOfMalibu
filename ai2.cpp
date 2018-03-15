@@ -55,26 +55,26 @@ int findAmountAi()//Find amount of AI territories
 	int aiNum=0;
 	try
 	{
-	sqlite::sqlite db( database );//Opens database
+		sqlite::sqlite db( database );//Opens database
 
-	auto cur1 = db.get_statement();
-	cur1->set_sql("SELECT Owned FROM Map;");//Selecting owned column of map
-	cur1->prepare();
+		auto cur1 = db.get_statement();
+		cur1->set_sql("SELECT Owned FROM Map;");//Selecting owned column of map
+		cur1->prepare();
 
 
-	int aiAmount=0;
+		int aiAmount=0;
 
-	int i;
-	while(cur1->step())//Go through the results
-	{
-		int CurMap = cur1->get_int(0);//Get results
-
-		if(CurMap == 0)//If ai
+		int i;
+		while(cur1->step())//Go through the results
 		{
-			aiAmount++;//add to ai amount
+			int CurMap = cur1->get_int(0);//Get results
+
+			if(CurMap == 0)//If ai
+			{
+				aiAmount++;//add to ai amount
+			}
 		}
-	}
-	return aiAmount;
+		return aiAmount;
 	}
 
 	catch( sqlite:: exception e )
@@ -89,23 +89,30 @@ int findAmountAi()//Find amount of AI territories
 int* findAI(int* map) 
 {
 	int aiNum=0;
+	try{
+		sqlite::sqlite db( database );//Opens database
 
-	sqlite::sqlite db( database );//Opens database
+		auto cur = db.get_statement();
+		cur->set_sql("SELECT map_ID FROM Map WHERE Owned = ?; ");//Selecting ai territory
+		cur->prepare();
 
-	auto cur = db.get_statement();
-	cur->set_sql("SELECT map_ID FROM Map WHERE Owned = ?; ");//Selecting ai territory
-	cur->prepare();
-
-	cur->bind(1,aiNum);
+		cur->bind(1,aiNum);
 
 
-	int i =0;
-	int currentMapID;
-	while(cur->step())//Go through the results
+		int i =0;
+		int currentMapID;
+		while(cur->step())//Go through the results
+		{
+			currentMapID = cur->get_int(0);
+			map[i]=currentMapID;
+			i++;
+		}
+	}
+
+	catch( sqlite:: exception e )//Codio week 4
 	{
-		currentMapID = cur->get_int(0);
-		map[i]=currentMapID;
-		i++;
+	    cerr << e.what() << endl;//Shows error
+	    return NULL;
 	}
 	return map;
 }
@@ -176,10 +183,10 @@ int AITurn() //runs from here
 
 	int selTerritory =selectTerr(map,aSize);
 
-	int defence = rand() % (100);
+	int defence = rand() % (100);//generates a random number for AI personality per turn
 	int attack = rand() % (100);
 
-	if(attack >= defence)
+	if(attack >= defence)//attack wins WE FIGHT TODAY LADS
 	{
 		attackPlayer();
 		cout << "AI attacked player!" << endl;
