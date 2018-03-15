@@ -31,7 +31,7 @@ int addArmy(int terr)//Adds units to the ai to territory
 		auto cur = db.get_statement(); //Prepares cursor
 
 		cur->set_sql("INSERT INTO ai_Army ( player_ID, military_ID, map_ID)"
-			"VALUES (?,?,?);"); //Inserting army values
+			"VALUES (?,?,?);"); //Inserting army values -- Solution help from Codio
 
 		cur->prepare();//Send query
 
@@ -87,7 +87,7 @@ int findAmountAi()//Find amount of AI territories
 }
 
 
-int* findAI(int* map) 
+int* findAI(int* map) //Finds only AI territories
 {
 	int aiNum=0;
 	try{
@@ -100,7 +100,7 @@ int* findAI(int* map)
 		cur->bind(1,aiNum);
 
 
-		int i =0;
+		int i =0;//Index
 		int currentMapID;
 		while(cur->step())//Go through the results
 		{
@@ -115,6 +115,7 @@ int* findAI(int* map)
 	    cerr << e.what() << endl;//Shows error
 	    return NULL;
 	}
+	
 	return map;
 }
 
@@ -135,7 +136,7 @@ int* selectTerr(int* Aimap, int aSize, int* returnValue)//Find appropriate terri
 {	
 	int terr[aSize];
 	int i;
-	int sT;
+	int sT;//Selected territory
 	int playerTerritory;
 	for(i = 0; i < aSize;i++)//Go through the map
 	{
@@ -176,6 +177,9 @@ int* selectTerr(int* Aimap, int aSize, int* returnValue)//Find appropriate terri
 		{
 			returnValue[0] = terr[terChoose];
 			returnValue[1] = playerTerritory;
+
+			int ter = terr[terChoose];
+
 			return returnValue;
 		}
 		timer++;//increment timer
@@ -278,7 +282,6 @@ int delTroops(int threshold, int map_ID, int player_ID, int AI_map_ID, string AI
         {
             vector<int> armyValues = troopCounter(AI_map_ID, player_ID, "AI");
             int attackValue = armyValues[0];
-            cout << attackValue << " !!!!!!! " << threshold << endl;
             while(attackValue>threshold)
             {
                 cur1->set_sql("DELETE FROM ai_Army "
@@ -309,6 +312,7 @@ int battle(int map_ID, int player_ID, int AI_map_ID) ///Calculates the threshold
     {
         sqlite::sqlite db(file);
         auto cur1=db.get_statement();
+        auto cur2=db.get_statement();
 
         vector<int> AI_Army = troopCounter(AI_map_ID, player_ID, "AI");
         int AIAttackTotal = AI_Army[0];
@@ -336,6 +340,15 @@ int battle(int map_ID, int player_ID, int AI_map_ID) ///Calculates the threshold
                 cur1->bind(1, map_ID);
                 cur1->bind(2, player_ID);
                 cur1->step();
+                
+                cur2->set_sql("UPDATE Map "
+                              "SET Owned = 0 "
+                              "WHERE map_ID = ? AND player_ID = ? ");
+                cur2->prepare();
+                cur2->bind(1, map_ID);
+                cur2->bind(2, player_ID);
+                cur2->step();
+                
             }
             else
             {
@@ -348,12 +361,21 @@ int battle(int map_ID, int player_ID, int AI_map_ID) ///Calculates the threshold
         {
             if (playerAttack>2*AIAttack)
             {
+                cout << "You wiped out their army!" << endl;
                 cur1->set_sql("DELETE FROM ai_Army "
                               "WHERE map_ID = ? AND player_ID = ? ");
                 cur1->prepare();
                 cur1->bind(1, AI_map_ID);
                 cur1->bind(2, player_ID);
                 cur1->step();
+                                
+                cur2->set_sql("UPDATE Map "
+                              "SET Owned = 1 "
+                              "WHERE map_ID = ? AND player_ID = ? ");
+                cur2->prepare();
+                cur2->bind(1, AI_map_ID);
+                cur2->bind(2, player_ID);
+                cur2->step();
             }
             else
             {
@@ -402,7 +424,6 @@ int AITurn() //runs from here
 		addArmy(selTerritory[0]);//Add some army to the AI
 		cout << "AI added forces." << endl;
 	}
-
 
 }
 
