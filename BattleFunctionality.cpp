@@ -5,6 +5,76 @@
 #include <vector>
 using namespace std;
 
+int playerArmyPosition(int player_ID)
+{
+    string file = "civilwarofMalibu.db";
+    try
+    {
+        int playerArmyPosition;
+        cout << "Which army do you want to attack with? ";
+        cin >> playerArmyPosition;
+            
+        sqlite::sqlite db(file);
+        auto cur1=db.get_statement();
+        
+        cur1->set_sql("SELECT Owned FROM Map "
+                      "WHERE player_ID = ? AND map_ID = ? ");
+        cur1->prepare();
+        cur1->bind(1, player_ID);
+        cur1->bind(2, playerArmyPosition);
+        cur1->step();
+        
+        int owned = cur1->get_int(0);
+        if( owned != 1 )
+        {
+            cout << "You do not own this territory" << endl;
+        }
+        else
+        {
+            return playerArmyPosition;
+        }
+    }
+    catch(sqlite::exception e)
+    {
+        std::cerr << e.what() << endl;
+    }
+}
+
+int AIArmyPosition(int player_ID)
+{
+    string file = "civilwarofMalibu.db";
+    try
+    {
+        int AIArmyPosition;
+        cout << "Which area do you want to attack? ";
+        cin >> AIArmyPosition;
+            
+        sqlite::sqlite db(file);
+        auto cur1=db.get_statement();
+        
+        cur1->set_sql("SELECT Owned FROM Map "
+                      "WHERE player_ID = ? AND map_ID = ? ");
+        cur1->prepare();
+        cur1->bind(1, player_ID);
+        cur1->bind(2, AIArmyPosition);
+        cur1->step();
+        
+        int owned = cur1->get_int(0);
+        if( owned != 0 )
+        {
+            cout << "You can not attack this area" << endl;
+        }
+        else
+        {
+            return AIArmyPosition;
+        }
+    }
+    catch(sqlite::exception e)
+    {
+        std::cerr << e.what() << endl;
+    }
+}
+
 vector<int> troopCounter(int map_ID, int player_ID, string AIorPlayer) ///Counts the attack and defence of the total amount of units 
 {
     string file = "civilwarofMalibu.db";
@@ -210,5 +280,7 @@ int battle(int map_ID, int player_ID, int AI_map_ID) ///Calculates the threshold
 
 main()
 {
-    battle(4, 1, 6);
+    int map_ID = playerArmyPosition(player_ID);
+    int AI_map_ID = AIArmyPosition(player_ID);
+    battle(map_ID, player_ID, AI_map_ID);
 }
