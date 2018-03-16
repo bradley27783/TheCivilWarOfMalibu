@@ -26,11 +26,11 @@ int main()
         return 1;
     }
     
-    if(a==1){
+    if( a == 1 )
+    {
         cout << "How many would you like to buy? " << endl;
         int b;
         cin >> b;
-        string sqliteFile = "civilwarofMalibu.db";
     
         try                                                 
         {
@@ -39,14 +39,23 @@ int main()
         
             cur->set_sql("INSERT INTO player_income "
                          "VALUES (?)");
+            cur->prepare();
             cur->bind(1,b);
+            cur->step();
+            
+            catch( sqlite::exception e )
+            {
+                cerr << e.what() << endl;
+                return 1;
+            }
         }
+    }
         
-    else if(a==2){
+    else if( a == 2 )
+    {
         cout << "How many would you like to buy? " << endl;
         int b;
         cin >> b;
-        string sqliteFile = "civilwarofMalibu.db";
     
         try                                                 
         {
@@ -55,24 +64,42 @@ int main()
         
             cur->set_sql("INSERT INTO player_income "
                          "VALUES (?)");
+            cur->prepare();
             cur->bind(1,b);
-        }
-        
-    else if(a==3){
-        cout << "How many would you like to buy? " << endl;
-        int b;
-        cin >> b;
-        string sqliteFile = "civilwarofMalibu.db";
-    
-        try                                                 
-        {
-            sqlite::sqlite db(sqliteFile);
-            auto cur=db.get_statement();
-        
-            cur->set_sql("INSERT INTO player_income "
-                         "VALUES (?)");
-            cur->bind(1,b);
-        }
+            cur->step();
 
+            catch( sqlite::exception e )
+            {
+                cerr << e.what() << endl;
+                return 1;
+            }
+        }
+    }
+    
+    else if( a == 3 )
+    {
+        cout << "How many would you like to buy? " << endl;
+        int b;
+        cin >> b;
+    
+        try                                                 
+        {
+            sqlite::sqlite db(sqliteFile);
+            auto cur=db.get_statement();
+        
+            cur->set_sql("INSERT INTO player_income "
+                         "VALUES (?)");
+            cur->prepare();
+            cur->bind(1,b);
+            cur->step();
+
+            catch( sqlite::exception e )
+            {
+                cerr << e.what() << endl;
+                return 1;
+            }
+        }
+    }
+    
     return 0;
 }
